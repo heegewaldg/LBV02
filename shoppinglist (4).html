@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="shoppingstyle.css" media="screen" />
+    <script src="app.js" async></script>
+
+</head>
+
+<body>
+
+    <div id="myDIV" class="header">
+        <h2 style="margin:5px">Niklas und Gregory's To Do List</h2>
+        <input type="text" id="myInput" placeholder="To Do...">
+        <span onclick="newElement()" class="addBtn">Hinzufügen</span>
+    </div>
+
+    <ul id="myUL">
+        <li class="checked">Javascript Website machen</li>
+    </ul>
+
+    <div id="clear-button">
+        <button type="button" id="clear-list" onclick="removeAll()">Zurücksetzen</button>
+    </div>
+
+    <div id="gif">
+        <img src="http://i.stack.imgur.com/SBv4T.gif" alt="this slowpoke moves">
+    </div>
+
+    <script>
+        // close button bei jedem Item in der Liste kreieren
+        var myNodelist = document.getElementsByTagName("LI");
+        var i;
+        for (i = 0; i < myNodelist.length; i++) {
+            var span = document.createElement("SPAN");
+            var txt = document.createTextNode("\u00D7");
+            span.className = "close";
+            span.appendChild(txt);
+            myNodelist[i].appendChild(span);
+        }
+
+        // auf close button klicken um Item in der Liste zu entfernen
+        var close = document.getElementsByClassName("close");
+        var i;
+        for (i = 0; i < close.length; i++) {
+            close[i].onclick = function () {
+                var div = this.parentElement;
+                div.style.display = "none";
+            }
+        }
+
+        // checked symbol wenn man auf Item in der Liste klickt
+        var list = document.querySelector('ul');
+        list.addEventListener('click', function (ev) {
+            if (ev.target.tagName === 'LI') {
+                ev.target.classList.toggle('checked');
+            }
+        }, false);
+
+        // neues List Item wenn man auf hinzufügen klickt
+        function newElement() {
+            var li = document.createElement("li");
+            var inputValue = document.getElementById("myInput").value;
+            var t = document.createTextNode(inputValue);
+            li.appendChild(t);
+            if (inputValue === '') {
+                alert("Du musst etwas schreiben!");
+            } else {
+                document.getElementById("myUL").appendChild(li);
+            }
+            document.getElementById("myInput").value = "";
+
+            var span = document.createElement("SPAN");
+            var txt = document.createTextNode("\u00D7");
+            span.className = "close";
+            span.appendChild(txt);
+            li.appendChild(span);
+
+            for (i = 0; i < close.length; i++) {
+                close[i].onclick = function () {
+                    var div = this.parentElement;
+                    div.style.display = "none";
+                }
+            }
+            // Liste zurücksetzen
+            function removeAll() {
+                var lst = document.getElementsByTagName("li");
+                lst[0].innerHTML = "";
+            }
+        }
+    </script>
+
+</body>
+
+<footer id="footer1">
+    <p>a Website by Niklas Dammann and Gregory Heegewald</p>
+</footer>
+
+</html>
